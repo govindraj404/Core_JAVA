@@ -28,32 +28,32 @@
 Data Hiding: Encapsulation hides the internal details of how an object's state is implemented, allowing the object to maintain its integrity.
 Detailed Scenario:
   Consider a Person class encapsulating personal information:
-  ```java
-   public class Person {
-    private String name;
-    private int age;
-
-    public Person(String name, int age) {
-        this.name = name;
-        this.age = age;
-    }
-
-    // Getter and setter methods
-    public String getName() {
-        return name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        // Additional logic for validation can be added
-        this.age = age;
-    }
-}
-
-   ```
+          ```java
+           public class Person {
+            private String name;
+            private int age;
+        
+            public Person(String name, int age) {
+                this.name = name;
+                this.age = age;
+            }
+        
+            // Getter and setter methods
+            public String getName() {
+                return name;
+            }
+        
+            public int getAge() {
+                return age;
+            }
+        
+            public void setAge(int age) {
+                // Additional logic for validation can be added
+                this.age = age;
+            }
+        }
+        
+           ```
 
 **[⬆ Back to Top](#table-of-contents)**
 
