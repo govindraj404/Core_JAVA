@@ -58,25 +58,25 @@ Consider a Person class encapsulating personal information:
 
 **[⬆ Back to Top](#table-of-contents)**
 
-3 ### Inheritance in Java
+2. ### Inheritance in Java
 
-        Inheritance is a fundamental concept in Object-Oriented Programming (OOP) that allows a class to inherit properties and behaviors from another class. In 
+   Inheritance is a fundamental concept in Object-Oriented Programming (OOP) that allows a class to inherit properties and behaviors from another class. In 
    Java, it promotes code reuse and establishes relationships between classes.
 
-        ## Detailed Explanation:
+   ## Detailed Explanation:
 
    ### Superclass and Subclass:
-        Inheritance involves the creation of a superclass (base class) and a subclass (derived class). The superclass provides a general template, and the 
+   Inheritance involves the creation of a superclass (base class) and a subclass (derived class). The superclass provides a general template, and the 
    subclass extends or specializes it by adding or modifying features.
 
    ### Code Reusability:
-        One of the primary advantages of inheritance is code reusability. The fields and methods defined in the superclass are inherited by the subclass, allowing 
+    One of the primary advantages of inheritance is code reusability. The fields and methods defined in the superclass are inherited by the subclass, allowing 
    the subclass to reuse the functionality provided by the superclass.
    ## Detailed Scenario:
 
    Consider a `Vehicle` superclass and specific vehicle types (`Car` and `Motorcycle`) as subclasses:
 
-        ```java
+   ```java
         public class Vehicle {
             protected String brand;
 
