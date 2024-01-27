@@ -18,18 +18,18 @@
 
 2. ### Encapsulation
 
-**Detailed Explanation:**
+   **Detailed Explanation:**
 
-Encapsulation is the bundling of data (attributes or fields) and methods that operate on the data into a single unit, typically a class. It involves the concept of access modifiers to control the access to the internal state of an object.
+    Encapsulation is the bundling of data (attributes or fields) and methods that operate on the data into a single unit, typically a class. It involves the concept of access modifiers to control the access to the internal state of an object.
 
-**Key Aspects:**
+   **Key Aspects:**
 
-Access Modifiers: Fields are often declared as private, limiting direct access from outside the class. Public methods, often referred to as getters and setters, provide controlled access to the internal state.
+   Access Modifiers: Fields are often declared as private, limiting direct access from outside the class. Public methods, often referred to as getters and setters, provide controlled access to the internal state.
 Data Hiding: Encapsulation hides the internal details of how an object's state is implemented, allowing the object to maintain its integrity.
 Detailed Scenario:
-Consider a Person class encapsulating personal information:
-```java
-public class Person {
+  Consider a Person class encapsulating personal information:
+  ```java
+   public class Person {
     private String name;
     private int age;
 
@@ -53,7 +53,7 @@ public class Person {
     }
 }
 
-```
+   ```
 
 **[⬆ Back to Top](#table-of-contents)**
 
