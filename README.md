@@ -27,7 +27,8 @@
    Access Modifiers: Fields are often declared as private, limiting direct access from outside the class. Public methods, often referred to as getters and setters, provide controlled access to the internal state.
 Data Hiding: Encapsulation hides the internal details of how an object's state is implemented, allowing the object to maintain its integrity.
 Detailed Scenario:
-  Consider a Person class encapsulating personal information:
+Consider a Person class encapsulating personal information:
+
    ```java
          public class Person {
             private String name;
@@ -73,7 +74,7 @@ Detailed Scenario:
    the subclass to reuse the functionality provided by the superclass.
    ## Detailed Scenario:
 
-        Consider a `Vehicle` superclass and specific vehicle types (`Car` and `Motorcycle`) as subclasses:
+   Consider a `Vehicle` superclass and specific vehicle types (`Car` and `Motorcycle`) as subclasses:
 
         ```java
         public class Vehicle {
