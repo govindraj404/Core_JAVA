@@ -58,7 +58,7 @@ Consider a Person class encapsulating personal information:
 
 **[⬆ Back to Top](#table-of-contents)**
 
-2. ### Inheritance in Java
+3. ### Inheritance in Java
 
    Inheritance is a fundamental concept in Object-Oriented Programming (OOP) that allows a class to inherit properties and behaviors from another class. In 
    Java, it promotes code reuse and establishes relationships between classes.
@@ -110,7 +110,9 @@ Consider a Person class encapsulating personal information:
         
             // Additional methods specific to Motorcycle
         }
-        ```
-        In this scenario, Car and Motorcycle inherit common properties from the Vehicle superclass. The start method is reused in both subclasses, demonstrating         the principle of code reusability through inheritance.
+      ```
+      In this scenario, Car and Motorcycle inherit common properties from the Vehicle superclass. The start method is reused in both subclasses, demonstrating         the principle of code reusability through inheritance.
+   
+   **[⬆ Back to Top](#table-of-contents)**
 
 
