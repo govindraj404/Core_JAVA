@@ -196,3 +196,94 @@ export class AppComponent {
 }
 
 ```
+
+```typescript
+  import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <input type="file" (change)="handleFileInputChange($event)">
+  `,
+})
+export class AppComponent {
+  handleFileInputChange(event: any): void {
+    const files: FileList = event.target.files;
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      this.detectArchiveType(file).then((archiveType) => {
+        if (archiveType) {
+          console.log(`${file.name} is a ${archiveType} archive.`);
+        } else {
+          console.log(`${file.name} is not a recognized archive.`);
+        }
+      });
+    }
+  }
+
+  async detectArchiveType(file: File): Promise<string | null> {
+    return new Promise<string | null>((resolve) => {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        const arrayBuffer = e.target?.result as ArrayBuffer;
+        const uint8Array = new Uint8Array(arrayBuffer);
+
+        // Define an array of signature checks
+        const signatureChecks = [
+          { signature: [0x50, 0x4B], type: 'ZIP archive' },
+          { signature: [0x52, 0x61, 0x72, 0x21, 0x1A, 0x07, 0x00], type: 'RAR archive' },
+          { signature: [0x37, 0x7A, 0xBC, 0xAF, 0x27, 0x1C], type: '7-Zip archive' },
+          { signature: [0x75, 0x73, 0x74, 0x61, 0x72], type: 'Tape Archive' }, // .tar
+          { signature: [0x1F, 0x8B], type: 'Gzip compressed archive' }, // .gz
+          { signature: [0x1F, 0x8B, 0x08], type: 'Tarball compressed with gzip' }, // .tar.gz or .tgz
+          { signature: [0x42, 0x5A, 0x68], type: 'Bzip2 compressed archive' }, // .bz2
+          { signature: [0x42, 0x5A, 0x68, 0x39], type: 'Tarball compressed with bzip2' }, // .tar.bz2 or .tbz2
+          { signature: [0xFD, 0x37, 0x7A, 0x58, 0x5A, 0x00], type: 'XZ compressed archive' }, // .xz
+          { signature: [0xFD, 0x37, 0x7A, 0x58, 0x5A, 0x00, 0x00], type: 'Tarball compressed with XZ' }, // .tar.xz or .txz
+          { signature: [0x1F, 0x9D], type: 'Tarball compressed with compress' }, // .tar.Z
+          { signature: [0x4D, 0x53, 0x43, 0x46], type: 'Cabinet archive' }, // .cab
+          { signature: [0x43, 0x44, 0x30, 0x30, 0x31], type: 'ISO disc image' }, // .iso
+          { signature: [0x78, 0x61, 0x72, 0x21], type: 'Apple Disk Image' }, // .dmg
+          { signature: [0x50, 0x4B, 0x03, 0x04], type: 'Java Archive' }, // .jar
+          { signature: [0x1F, 0x9D, 0x01, 0x00], type: 'Tarball compressed with Zstandard' }, // .tar.zst or .zst
+          { signature: [0x53, 0x49, 0x54, 0x21], type: 'StuffIt archive' }, // .sit
+          { signature: [0x1E, 0xEC], type: 'ACE archive' }, // .ace
+          { signature: [0x60, 0xEA], type: 'ARJ archive' }, // .arj
+          { signature: [0x4C, 0x5A, 0x48], type: 'LZH archive' }, // .lzh or .lha
+          // Add more signature checks for other archive types
+        ];
+
+        // Try detecting various archive formats
+        const detectedType = this.detectSignature(uint8Array, signatureChecks);
+        resolve(detectedType);
+      };
+
+      reader.readAsArrayBuffer(file);
+    });
+  }
+
+  detectSignature(data: Uint8Array, signatureChecks: { signature: number[]; type: string }[]): string | null {
+    for (const check of signatureChecks) {
+      if (this.hasSignature(data, check.signature)) {
+        return check.type;
+      }
+    }
+    return null;
+  }
+
+  hasSignature(data: Uint8Array, signature: number[]): boolean {
+    if (data.length >= signature.length) {
+      for (let i = 0; i < signature.length; i++) {
+        if (data[i] !== signature[i]) {
+          return false;
+        }
+      }
+      return true;
+    }
+    return false;
+  }
+}
+
+```
