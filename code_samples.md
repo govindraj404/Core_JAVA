@@ -109,3 +109,90 @@ export class AppComponent {
 
 
 ```
+
+
+```typescript
+  import { Component } from '@angular/core';
+import { saveAs } from 'file-saver';
+import * as pako from 'pako';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <input type="file" (change)="handleFileInputChange($event)">
+  `,
+})
+export class AppComponent {
+  handleFileInputChange(event: any): void {
+    const files: FileList = event.target.files;
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      this.detectArchiveType(file).then((archiveType) => {
+        if (archiveType) {
+          console.log(`${file.name} is a ${archiveType} archive.`);
+        } else {
+          console.log(`${file.name} is not a recognized archive.`);
+        }
+      });
+    }
+  }
+
+  async detectArchiveType(file: File): Promise<string | null> {
+    return new Promise<string | null>((resolve) => {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        const arrayBuffer = e.target?.result as ArrayBuffer;
+        const uint8Array = new Uint8Array(arrayBuffer);
+
+        // Try detecting various archive formats
+        if (this.hasZipSignature(uint8Array)) {
+          resolve('ZIP');
+        } else if (this.hasRarSignature(uint8Array)) {
+          resolve('RAR');
+        } else if (this.has7ZipSignature(uint8Array)) {
+          resolve('7-Zip');
+        } else {
+          resolve(null);
+        }
+      };
+
+      reader.readAsArrayBuffer(file);
+    });
+  }
+
+  hasZipSignature(data: Uint8Array): boolean {
+    // Check for ZIP file signature (first two bytes)
+    return data.length >= 2 && data[0] === 0x50 && data[1] === 0x4B;
+  }
+
+  hasRarSignature(data: Uint8Array): boolean {
+    // Check for RAR file signature (first seven bytes)
+    return (
+      data.length >= 7 &&
+      data[0] === 0x52 &&
+      data[1] === 0x61 &&
+      data[2] === 0x72 &&
+      data[3] === 0x21 &&
+      data[4] === 0x1A &&
+      data[5] === 0x07 &&
+      data[6] === 0x00
+    );
+  }
+
+  has7ZipSignature(data: Uint8Array): boolean {
+    // Check for 7-Zip file signature (first six bytes)
+    return (
+      data.length >= 6 &&
+      data[0] === 0x37 &&
+      data[1] === 0x7A &&
+      data[2] === 0xBC &&
+      data[3] === 0xAF &&
+      data[4] === 0x27 &&
+      data[5] === 0x1C
+    );
+  }
+}
+
+```
