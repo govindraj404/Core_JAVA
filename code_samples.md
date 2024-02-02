@@ -348,3 +348,102 @@ console.log(flattenedJson);
 
 
 ```
+
+```typescript
+// file-validation.service.ts
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+interface ExtendedFile extends File {
+  isArchived?: boolean;
+}
+
+@Injectable({
+  providedIn: 'root',
+})
+export class FileValidationService {
+  constructor(private http: HttpClient) {}
+
+  async validateFilesMimeTypes(files: FileList): Promise<ExtendedFile[]> {
+    const validationResults: ExtendedFile[] = [];
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i] as ExtendedFile;
+      const mimeType = await this.getMimeType(file);
+      const isArchived = this.isValidMimeType(mimeType);
+
+      // Append the isArchived property to the original File object
+      file.isArchived = isArchived;
+
+      validationResults.push(file);
+    }
+
+    return validationResults;
+  }
+
+  async validateMimeType(file: File): Promise<ExtendedFile> {
+    const mimeType = await this.getMimeType(file);
+    const isArchived = this.isValidMimeType(mimeType);
+
+    // Append the isArchived property to the original File object
+    (file as ExtendedFile).isArchived = isArchived;
+
+    return file as ExtendedFile;
+  }
+
+  async getMimeType(file: File): Promise<string | null> {
+    return new Promise<string | null>((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const arr = new Uint8Array(reader.result as ArrayBuffer).subarray(0, 4);
+        let header = '';
+        for (let i = 0; i < arr.length; i++) {
+          header += arr[i].toString(16);
+        }
+
+        const mimeType = this.getMimeTypeFromHeader(header);
+        resolve(mimeType);
+      };
+
+      reader.readAsArrayBuffer(file);
+    });
+  }
+
+  getMimeTypeFromHeader(header: string): string | null {
+    switch (header) {
+       case '504b34':
+        return 'application/zip'; // ZIP
+      case '52617221':
+        return 'application/x-rar-compressed'; // RAR
+      case '377abcaf271c':
+        return 'application/x-7z-compressed'; // 7-Zip
+      case '7573746172':
+        return 'application/x-tar'; // TAR
+      case '1f8b08':
+        return 'application/gzip'; // Gzip
+      case '1f9d':
+        return 'application/x-tar'; // Tarball compressed with compress
+      case '425a68':
+        return 'application/x-bzip2'; // Bzip2
+      case '425a6839':
+        return 'application/x-tar'; // Tarball compressed with bzip2
+      case 'fd377a585a00':
+        return 'application/x-xz'; // XZ
+      case 'fd377a585a0000':
+        return 'application/x-tar'; // Tarball compressed with XZ
+      case '757374610030307573746172':
+        return 'application/x-tar'; // Tar
+      // Add more cases for other MIME types
+      default:
+        return null;
+    }
+  }
+
+  private isValidMimeType(mimeType: string | null): boolean {
+    // Add your own validation logic here
+    // For simplicity, assuming any non-null mimeType is considered an archive
+    return mimeType !== null;
+  }
+}
+
+```
