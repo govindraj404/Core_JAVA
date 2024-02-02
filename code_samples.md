@@ -290,16 +290,51 @@ export class AppComponent {
 
 ```typescript
 
-   private flattenObject(obj: any, parentKey = ''): any {
-    return Object.fromEntries(Object.entries(obj).map(([key, value]) =>
-      typeof value === 'object' && value !== null
-        ? this.flattenObject(value, parentKey ? `${parentKey}_${key}` : key)
-        : { [parentKey ? `${parentKey}_${key}` : key]: value }
-    ));
+  function flattenJson(data: any): any {
+  const result: any = {};
+
+  function recurse(current: any, parentKey?: string): void {
+    for (const key in current) {
+      if (current.hasOwnProperty(key)) {
+        const newKey = parentKey ? `${parentKey}.${key}` : key;
+
+        if (typeof current[key] === 'object' && !Array.isArray(current[key])) {
+          recurse(current[key], newKey);
+        } else {
+          result[newKey] = current[key];
+        }
+      }
+    }
   }
 
-  private extractLastValue(data: any): any {
-    const keys = Object.keys(data);
-    return data[keys[keys.length - 1]];
+  recurse(data);
+
+  return result;
+}
+
+// Your nested JSON data
+const nestedJson = {
+  "success": true,
+  "ip": "203.189.181.32",
+  "type": "IPv4",
+  "country": {
+    "code": "IN",
+    "name": "India"
+  },
+  "location": {
+    "lat": 21.9974,
+    "lon": 79.0011
+  },
+  "timeZone": "Asia/Kolkata",
+  "asn": {
+    "number": 38174,
+    "name": "Capgemini Technology Services India Limited",
+    "network": "203.189.180.0/22"
   }
+};
+
+// Flatten the nested JSON
+const flattenedJson = flattenJson(nestedJson);
+console.log(flattenedJson);
+
 ```
