@@ -341,4 +341,10 @@ const nestedJson = {
 const flattenedJson = flattenJson(nestedJson);
 console.log(flattenedJson);
 
+{ signature: [0x75, 0x73, 0x74, 0x61, 0x72, 0x00, 0x30, 0x30], type: 'Tape Archive' }, // .tar
+// ...
+{ signature: [0x75, 0x73, 0x74, 0x61, 0x72, 0x00, 0x30, 0x30], type: 'Tape Archive' }, // .tar
+// ...
+
+
 ```
