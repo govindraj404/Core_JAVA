@@ -253,6 +253,10 @@ export class AppComponent {
           { signature: [0x60, 0xEA], type: 'ARJ archive' }, // .arj
           { signature: [0x4C, 0x5A, 0x48], type: 'LZH archive' }, // .lzh or .lha
           // Add more signature checks for other archive types
+// ...
+{ signature: [0x75, 0x73, 0x74, 0x61, 0x72, 0x00, 0x30, 0x30, 0x75, 0x73, 0x74, 0x61, 0x72, 0x00, 0x00], type: 'Tape Archive' }, // .tar
+// ...
+
         ];
 
         // Try detecting various archive formats
