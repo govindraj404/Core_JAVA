@@ -287,3 +287,19 @@ export class AppComponent {
 }
 
 ```
+
+```typescript
+
+   private flattenObject(obj: any, parentKey = ''): any {
+    return Object.fromEntries(Object.entries(obj).map(([key, value]) =>
+      typeof value === 'object' && value !== null
+        ? this.flattenObject(value, parentKey ? `${parentKey}_${key}` : key)
+        : { [parentKey ? `${parentKey}_${key}` : key]: value }
+    ));
+  }
+
+  private extractLastValue(data: any): any {
+    const keys = Object.keys(data);
+    return data[keys[keys.length - 1]];
+  }
+```
