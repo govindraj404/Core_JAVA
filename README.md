@@ -115,6 +115,19 @@ Consider a Person class encapsulating personal information:
    
    **[⬆ Back to Top](#table-of-contents)**
 
-4. ###what is the difference betweent the abstractclass and interface?
+4. ### what is the difference betweent the abstractclass and interface?
+   ```typescritp
+   ```
+   **[⬆ Back to Top](#table-of-contents)**
+
+5. ### Q5?
+   ```typescritp
+   ```
+   **[⬆ Back to Top](#table-of-contents)**
+6. ### Q6?
+   ```typescritp
+   ```
+   **[⬆ Back to Top](#table-of-contents)**
+   
 
 
