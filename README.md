@@ -121,8 +121,9 @@ Consider a Person class encapsulating personal information:
    **[⬆ Back to Top](#table-of-contents)**
 
 5. ### What is dependancy Injection?
-   ```text
+   
    Dependency Injection is a design pattern that facilitates loose coupling between components by externalizing the responsibility of creating and managing dependent objects, or dependencies. Instead of a class creating its own dependencies, they are provided from the outside, making the code more modular and easier to test.
+   ```typescript
    ```
    **[⬆ Back to Top](#table-of-contents)**
 6. ### Q6?
